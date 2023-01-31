@@ -23,6 +23,7 @@ public class HolidayUtil {
     public final static String NATIONALDAY = "国庆节";
     public final static String EPIDEMICSITUATION = "疫情";
     public final static String BIRTHDAY = "生日";
+    public final static String SXBIRTHDAY = "申星生日";
 
     /**
      * 获取假期时间
@@ -62,10 +63,15 @@ public class HolidayUtil {
                     birthday = new ChineseDate(year, 9, 29);
                 }
                 return birthday.getGregorianDate();
+            case SXBIRTHDAY:
+                ChineseDate sxbirthday = new ChineseDate(year, 9, 30);
+                if (sxbirthday.getGregorianYear() < 0){
+                    sxbirthday = new ChineseDate(year, 9, 29);
+                }
+                return sxbirthday.getGregorianDate();
             default:
                 return new Date();
         }
     }
-
 
 }

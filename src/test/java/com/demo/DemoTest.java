@@ -38,7 +38,7 @@ public class DemoTest {
             "认认真真上班，这根本就不叫赚钱，那是用劳动换取报酬。只有在上班的时候摸鱼划水，你才是从老板手里赚到了钱。最后，祝愿天下所有摸鱼人都能愉快的渡过每一天！";
     @Test
     public void test1(){
-        List<String> saturday = List.of(HolidayUtil.SATURDAY,HolidayUtil.QINGMINGFESTIVAL);
+
         Date date = new Date();
         int year = DateUtil.year(date);
         Map<String,Object> map = new HashMap<>();
@@ -55,7 +55,22 @@ public class DemoTest {
         map.put("newyearday", newyearday());
         map.put("birthday", birthday());
         String s = ParamsResolverHelper.resolveParams(map, TEMPLATE);
+
+        List<String> HolidayList = List.of(HolidayUtil.SATURDAY,HolidayUtil.QINGMINGFESTIVAL);
+        for (String holidayName : HolidayList) {
+            long holiday = holiday(holidayName);
+        }
         System.out.println(s);
+    }
+
+    private long holiday(String holidayName){
+        Date date = new Date();
+        int year = DateUtil.year(date);
+        Date holiday = HolidayUtil.getHoliday(holidayName, year);
+        if (DateUtil.year(holiday) > year){
+            holiday = HolidayUtil.getHoliday(holidayName, year+1);
+        }
+        return DateUtil.betweenDay(date, holiday, true);
     }
 
     private long saturday(){
